@@ -3,7 +3,11 @@ const config = require('config')
 const { check,validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const bcrypt  = require('bcryptjs')
+
+
 const router = express.Router();
+
+
 const User = require('../../models/User')
 const auth = require('../../middleware/auth')
 
@@ -26,8 +30,7 @@ router.get('/',auth,async (req,res)=>{
 // @access Public
 router.post('/',[
     check('email','Please include a valid email').isEmail(),
-    check('password','Password is required')
-    .exists()
+    check('password','Password is required').exists()
 ],async (req,res)=>{
     const errors = validationResult(req)
     if(!errors.isEmpty()){
@@ -49,7 +52,7 @@ router.post('/',[
     }
         
 
-
+    //if user is registered then send a token to that
     //Return jsonwebtoken
 
     const payload = {
